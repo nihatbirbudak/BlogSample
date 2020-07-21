@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <UserSecretsId>952de903-959b-4e3a-b54e-bf3fa6f115cd</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlogSample.DTO\BlogSample.DTO.csproj" />
+    <ProjectReference Include="..\BlogSample.Model\BlogSample.Model.csproj" />
+  </ItemGroup>
+
+</Project>

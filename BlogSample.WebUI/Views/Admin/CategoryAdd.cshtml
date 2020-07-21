@@ -1,0 +1,57 @@
+﻿@model CategoryDTO
+
+
+@{
+    ViewData["Title"] = "CategoryAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section pageHeader{
+    <div class="note note-info">
+        <p> Sistem kategori ekleme sayfası </p>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="portlet box blue ">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>Kategori Bilgileri
+                </div>
+                <div class="tools">
+                    <a href="" class="collapse"> </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config"> </a>
+                    <a href="" class="reload"> </a>
+                    <a href="" class="remove"> </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <form asp-action="CategoryAdd">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-body">
+
+                        <div class="form-group">
+                            <label>Name</label>
+                            <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                                <input class="form-control" placeholder="Name" asp-for="Name">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn blue">Save</button>
+                        <button type="button" class="btn default">Cancel</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-6"></div>
+
+</div>

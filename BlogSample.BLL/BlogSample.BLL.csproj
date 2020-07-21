@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BlogSample.Core\BlogSample.Core.csproj" />
+    <ProjectReference Include="..\BlogSample.DTO\BlogSample.DTO.csproj" />
+    <ProjectReference Include="..\BlogSample.Mapping\BlogSample.Mapping.csproj" />
+    <ProjectReference Include="..\BlogSample.Model\BlogSample.Model.csproj" />
+  </ItemGroup>
+
+</Project>
