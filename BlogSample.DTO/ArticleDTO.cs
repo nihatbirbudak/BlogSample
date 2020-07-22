@@ -15,6 +15,7 @@ namespace BlogSample.DTO
         public int NumberofLikes { get; set; }
         public bool IsRelease { get; set; }
         public int CategoryId { get; set; }
+        public int UserId { get; set; }
         public UserDTO UserDTO { get; set; }
         public CategoryDTO GetCategoryDTO { get; set; }
         public List<CommentDTO> CommentDTOs { get; set; }

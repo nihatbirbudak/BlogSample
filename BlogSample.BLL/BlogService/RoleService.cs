@@ -53,7 +53,7 @@ namespace BlogSample.BLL.BlogService
 
         public RoleDTO newRole(RoleDTO role)
         {
-            if (uow.GetRepository<Role>().GetAll().Any(z => z.Name == role.Name))
+            if (!uow.GetRepository<Role>().GetAll().Any(z => z.Name == role.Name))
             {
                 var adedRole = MapperFactory.CurrentMapper.Map<Role>(role);
                 adedRole = uow.GetRepository<Role>().Add(adedRole);

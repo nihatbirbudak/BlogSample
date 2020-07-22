@@ -1,0 +1,90 @@
+﻿
+@{
+    ViewData["Title"] = "ArticleList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model ArticleViewModel
+
+@section pageHeader{
+    <div class="note note-info">
+        <p>Sistemde kayıtlı Aticlelar</p>
+    </div>
+}
+@if (TempData["message"] != null)
+{
+    <div class="note note-success" id="message">
+        <p>@TempData["message"]</p>
+    </div>
+}
+
+<div class="portlet box green">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-comments"></i>Article Table
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+            <a href="#portlet-config" data-toggle="modal" class="config"> </a>
+            <a href="javascript:;" class="reload"> </a>
+            <a href="javascript:;" class="remove"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-scrollable">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th> # </th>
+                        <th> @Html.DisplayNameFor(z => z.ArticleDTO.Title) </th>
+                        <th> @Html.DisplayNameFor(z => z.ArticleDTO.Content) </th>
+                        <th> @Html.DisplayNameFor(z => z.ArticleDTO.Picture) </th>
+                        <th> @Html.DisplayNameFor(z => z.ArticleDTO.ReleaseDate) </th>
+                        <th> @Html.DisplayNameFor(z => z.ArticleDTO.NumberofReadings) </th>
+                        <th> @Html.DisplayNameFor(z => z.ArticleDTO.NumberofLikes) </th>
+                        <th> @Html.DisplayNameFor(z => z.ArticleDTO.IsRelease) </th>
+                        <th> @Html.DisplayNameFor(z => z.ArticleDTO.CategoryId) </th>
+                        <th> @Html.DisplayNameFor(z => z.ArticleDTO.UserId) </th>
+                        <th> @Html.DisplayNameFor(z => z.ArticleDTO.tagDTOs) </th>
+                        <th> @Html.DisplayNameFor(z => z.ArticleDTO.CommentDTOs) </th>
+
+                        <th> # </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var article in Model.ArticleDTOs)
+                    {
+                    <tr>
+                        <td> @article.Id </td>
+                        <td> @article.Title </td>
+                        <td> @article.Content </td>
+                        <td> @article.Picture </td>
+                        <td> @article.ReleaseDate </td>
+                        <td> @article.NumberofReadings </td>
+                        <td> @article.NumberofLikes </td>
+                        <td> @article.IsRelease </td>
+                        <td> @article.CategoryId </td>
+                        <td> @article.UserId </td>
+                        <td> @article.tagDTOs </td>
+                        <td> @article.CommentDTOs </td>
+                        <td>
+                            <a class="btn btn-success btn-sm" asp-action="ArticleEdit" asp-route-id="@article.Id">Edit</a>
+                            <a class="btn btn-danger btn-sm" asp-action="ArticleDelete" asp-route-id="@article.Id">Delete</a>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section FooterJsPlugin{
+    <script>
+        setTimeout(function () {
+            $('#message').fadeOut('fast');
+        }, 5000);
+    </script>
+}
+
+

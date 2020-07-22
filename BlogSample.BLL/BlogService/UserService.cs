@@ -57,7 +57,7 @@ namespace BlogSample.BLL.BlogService
             if (!uow.GetRepository<User>().GetAll().Any(z => z.UserName == user.UserName))
             {
                 var addedUser = MapperFactory.CurrentMapper.Map<User>(user);
-                addedUser.RoleId = 3;
+                addedUser.RoleId = 2;
                 addedUser = uow.GetRepository<User>().Add(addedUser);
                 uow.SaveChanges();
                 return MapperFactory.CurrentMapper.Map<UserDTO>(addedUser);

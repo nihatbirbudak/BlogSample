@@ -1,0 +1,74 @@
+﻿@model IEnumerable<UserDTO>
+
+@{
+    ViewData["Title"] = "UserList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section pageHeader{
+    <div class="note note-info">
+        <p>Sistemde kayıtlı kategoriler</p>
+    </div>
+}
+
+@if (TempData["message"] != null)
+{
+    <div class="note note-success" id="message">
+        <p>@TempData["message"]</p>
+    </div>
+}
+
+<div class="portlet box blue">
+    <div class="portlet-title">
+        <div class="caption">
+            <i class="fa fa-cogs"></i>Striped Table
+        </div>
+        <div class="tools">
+            <a href="javascript:;" class="collapse"> </a>
+            <a href="#portlet-config" data-toggle="modal" class="config"> </a>
+            <a href="javascript:;" class="reload"> </a>
+            <a href="javascript:;" class="remove"> </a>
+        </div>
+    </div>
+    <div class="portlet-body">
+        <div class="table-scrollable">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th> # </th>
+                        <th> @Html.DisplayNameFor(z => z.FullName) </th>
+                        <th> @Html.DisplayNameFor(z => z.UserName) </th>
+                        <th> @Html.DisplayNameFor(z => z.Mail) </th>
+                        <th> @Html.DisplayNameFor(z => z.Phone)</th>
+                        <th> # </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in Model)
+                    {
+                        <tr>
+                            <td>@user.Id  </td>
+                            <td>@user.FullName  </td>
+                            <td>@user.UserName  </td>
+                            <td>@user.Mail  </td>
+                            <td>@user.Phone  </td>
+                            <td>
+                                <a class="btn btn-success btn-sm" asp-action="UserEdit" asp-route-id="@user.Id">Edit</a>
+                                <a class="btn btn-danger btn-sm" asp-action="UserDelete" asp-route-id="@user.Id">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section FooterJsPlugin{
+    <script>
+        setTimeout(function () {
+            $('#message').fadeOut('fast');
+        }, 5000);
+    </script>
+
+}

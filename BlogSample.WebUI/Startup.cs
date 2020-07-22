@@ -28,7 +28,10 @@ namespace BlogSample.WebUI
             // Dependency Ýnjection
             services.AddControllersWithViews();
             services.AddSingleton<ICategoryService,CategoryService>();
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IRoleService, RoleService>();
             services.AddSingleton<IUnitofWork, UnitofWork>();
+            services.AddSingleton<IArticleService, ArticleService>();
             // DbContext yarlarý
             var optionsBuilder = new DbContextOptionsBuilder<BlogDbContext>();
             optionsBuilder.UseSqlServer(Configuration.GetConnectionString("BlogDbConnection"));
@@ -66,6 +69,24 @@ namespace BlogSample.WebUI
                     name: "CategoryList",
                     pattern: "Admin/Categories",
                     defaults: new {controller = "Admin", Action = "CategoryList"});
+                endpoints.MapControllerRoute(
+                    name: "UserList",
+                    pattern: "Admin/Users",
+                    defaults: new { controller = "Admin", Action = "UserList" });
+                endpoints.MapControllerRoute(
+                    name: "UserAdd",
+                    pattern: "Admin/UserAdd",
+                    defaults: new { controller = "Admin", Action = "UserAdd" });
+
+                endpoints.MapControllerRoute(
+                    name: "RoleList",
+                    pattern: "Admin/Roles",
+                    defaults: new { controller = "Admin", Action = "RoleList" });
+                endpoints.MapControllerRoute(
+                    name: "RoleAdd",
+                    pattern: "Admin/RoleAdd",
+                    defaults: new { controller = "Admin", Action = "RoleAdd" });
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
