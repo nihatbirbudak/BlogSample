@@ -1,7 +1,13 @@
 ﻿using BlogSample.BLL.Abstract;
 using BlogSample.DTO;
 using BlogSample.WebUI.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.ComponentModel;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BlogSample.WebUI.Controllers
 {
@@ -101,11 +107,16 @@ namespace BlogSample.WebUI.Controllers
         #region User İşlemleri
         public IActionResult UserList()
         {
-            return View(userService.getAll());
+            UserViewModel model = new UserViewModel();
+            model.UserDTOs = userService.getAll();
+            model.RoleDTOs = roleService.getAll();
+            return View(model);
         }
         public IActionResult UserAdd()
         {
-            return View();
+            UserViewModel model = new UserViewModel();
+            model.RoleDTOs = roleService.getAll();
+            return View(model);
         }
         [HttpPost]
         public IActionResult UserAdd(UserDTO userDTO)
@@ -114,6 +125,25 @@ namespace BlogSample.WebUI.Controllers
             userService.newUser(userDTO);
             return RedirectToAction("UserList");
         }
+        public IActionResult UserDelete(int id)
+        {
+            userService.deleteUser(id);
+            return RedirectToAction("UserList");
+        }
+        public IActionResult UserEdit(int id)
+        {
+            var model = new UserViewModel();
+            model.RoleDTOs = roleService.getAll();
+            model.UserDTO = userService.getUser(id);
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult UserEdit(UserDTO userDTO)
+        {
+            userService.updateUser(userDTO);
+            return RedirectToAction("UserList");
+        }
+
 
         #endregion
 
@@ -134,13 +164,31 @@ namespace BlogSample.WebUI.Controllers
             return View(model);
         }
         [HttpPost]
-        public IActionResult ArticleAdd(ArticleDTO articleDTO)
+        public async Task<IActionResult> ArticleAdd(ArticleDTO articleDTO, IFormFile file)
         {
-            ArticleViewModel model = new ArticleViewModel();
-            model.ArticleDTOs = articleService.getAll();
-            model.CategoryDTOs = categoryService.getAll();
+            if (file != null)
+            {
+                var extention = Path.GetExtension(file.FileName);
+                var randomName = string.Format($"{Guid.NewGuid()}{extention}");
+                var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\img", randomName);
+                articleDTO.Picture = randomName;
+                using (var stream = new FileStream(path, FileMode.Create))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
             articleService.newArticle(articleDTO);
             return RedirectToAction("ArticleList");
+        }
+        public IActionResult ArticleDelete(int id)
+        {
+            articleService.deleteArticle(id);
+            return RedirectToAction("ArticleList");
+        }
+        public IActionResult ArticleEdit(int id)
+        {
+
+            return View();
         }
 
 

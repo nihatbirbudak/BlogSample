@@ -21,7 +21,7 @@
 <div class="portlet box green">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-comments"></i>Article Table
+            <i class="fa fa-comments"></i>Makale Tablosu
         </div>
         <div class="tools">
             <a href="javascript:;" class="collapse"> </a>
@@ -37,7 +37,6 @@
                     <tr>
                         <th> # </th>
                         <th> @Html.DisplayNameFor(z => z.ArticleDTO.Title) </th>
-                        <th> @Html.DisplayNameFor(z => z.ArticleDTO.Content) </th>
                         <th> @Html.DisplayNameFor(z => z.ArticleDTO.Picture) </th>
                         <th> @Html.DisplayNameFor(z => z.ArticleDTO.ReleaseDate) </th>
                         <th> @Html.DisplayNameFor(z => z.ArticleDTO.NumberofReadings) </th>
@@ -57,8 +56,7 @@
                     <tr>
                         <td> @article.Id </td>
                         <td> @article.Title </td>
-                        <td> @article.Content </td>
-                        <td> @article.Picture </td>
+                        <td> <img src="~/img/@article.Picture" style="height:50px; width:auto; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;" alt="@article.Title" /> </td>
                         <td> @article.ReleaseDate </td>
                         <td> @article.NumberofReadings </td>
                         <td> @article.NumberofLikes </td>

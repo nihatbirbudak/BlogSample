@@ -1,4 +1,4 @@
-﻿@model IEnumerable<UserDTO>
+﻿@model UserViewModel
 
 @{
     ViewData["Title"] = "UserList";
@@ -21,7 +21,7 @@
 <div class="portlet box blue">
     <div class="portlet-title">
         <div class="caption">
-            <i class="fa fa-cogs"></i>Striped Table
+            <i class="fa fa-cogs"></i>Kullanıcı Listesi
         </div>
         <div class="tools">
             <a href="javascript:;" class="collapse"> </a>
@@ -36,27 +36,29 @@
                 <thead>
                     <tr>
                         <th> # </th>
-                        <th> @Html.DisplayNameFor(z => z.FullName) </th>
-                        <th> @Html.DisplayNameFor(z => z.UserName) </th>
-                        <th> @Html.DisplayNameFor(z => z.Mail) </th>
-                        <th> @Html.DisplayNameFor(z => z.Phone)</th>
+                        <th> @Html.DisplayNameFor(z => z.UserDTO.FullName) </th>
+                        <th> @Html.DisplayNameFor(z => z.UserDTO.UserName) </th>
+                        <th> @Html.DisplayNameFor(z => z.UserDTO.Mail) </th>
+                        <th> @Html.DisplayNameFor(z => z.UserDTO.Phone)</th>
+                        <th> @Html.DisplayNameFor(z => z.UserDTO.roleDTO.Name)</th>
                         <th> # </th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var user in Model)
+                    @foreach (var user in Model.UserDTOs)
                     {
-                        <tr>
-                            <td>@user.Id  </td>
-                            <td>@user.FullName  </td>
-                            <td>@user.UserName  </td>
-                            <td>@user.Mail  </td>
-                            <td>@user.Phone  </td>
-                            <td>
-                                <a class="btn btn-success btn-sm" asp-action="UserEdit" asp-route-id="@user.Id">Edit</a>
-                                <a class="btn btn-danger btn-sm" asp-action="UserDelete" asp-route-id="@user.Id">Delete</a>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td>@user.Id  </td>
+                        <td>@user.FullName  </td>
+                        <td>@user.UserName  </td>
+                        <td>@user.Mail  </td>
+                        <td>@user.Phone  </td>
+                        <td>@Model.RoleDTOs.First(z=> z.Id == user.RoleId).Name </td>
+                        <td>
+                            <a class="btn btn-success btn-sm" asp-action="UserEdit" asp-route-id="@user.Id">Edit</a>
+                            <a class="btn btn-danger btn-sm" asp-action="UserDelete" asp-route-id="@user.Id">Delete</a>
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

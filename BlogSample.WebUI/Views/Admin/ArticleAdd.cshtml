@@ -27,7 +27,7 @@
         <div class="portlet box blue ">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-gift"></i>Makale Bilgileri
+                    <i class="fa fa-gift"></i>Makale Ekleme
                 </div>
                 <div class="tools">
                     <a href="" class="collapse"> </a>
@@ -38,7 +38,7 @@
             </div>
             <div class="portlet-body form">
 
-                <form asp-action="ArticleAdd" enctype="multipart/form-data">
+                <form asp-action="ArticleAdd" enctype="multipart/form-data" class="form-horizontal form-bordered">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-body">
 
@@ -53,25 +53,42 @@
                             </div>
                         </div>
 
+                        <div class="form-group last">
+                            <label class="control-label col-md-2" asp-for="ArticleDTO.Content" ></label>
+                            <div class="col-md-10">
+                                <textarea asp-for="ArticleDTO.Content" id="summernote_1"> </textarea>
+                            </div>
+                        </div>
+                       
+
                         <div class="form-group">
-                            <label asp-for="ArticleDTO.Content" class="control-label"></label>
-                            <div class="input-group">
-                                <span class="input-group-addon">
-                                    <i class="fa fa-user"></i>
-                                </span>
-                                <input class="form-control" placeholder="Name" asp-for="ArticleDTO.Content">
-                                <span asp-validation-for="ArticleDTO.Content" class="text-danger"></span>
+                            <label asp-for="ArticleDTO.Picture" class="control-label"></label>
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"> </div>
+                                <div>
+                                    <span class="btn red btn-outline btn-file">
+                                        <span class="fileinput-new"> Select image </span>
+                                        <span class="fileinput-exists"> Change </span>
+                                        <input class="form-control" type="file" asp-for="File">
+                                    </span>
+                                    <a href="javascript:;" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                </div>
                             </div>
                         </div>
 
                         <div class="form-group">
-                            <label asp-for="ArticleDTO.Picture" class="control-label"></label>
+
+                            <input type="hidden" class="form-control" asp-for="ArticleDTO.UserId" value="4">
+
+                        </div>
+
+
+                        <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="fa fa-user"></i>
                                 </span>
-                                <input class="form-control" placeholder="Name" asp-for="ArticleDTO.Picture">
-                                <span asp-validation-for="ArticleDTO.Picture" class="text-danger"></span>
+                                <select asp-for="ArticleDTO.CategoryId" class="form-control" asp-items="@(new SelectList(Model.CategoryDTOs,"Id","Name"))"></select>
                             </div>
                         </div>
 
@@ -85,8 +102,6 @@
                                 <span asp-validation-for="ArticleDTO.IsRelease" class="text-danger"></span>
                             </div>
                         </div>
-
-                        
 
 
                     </div>

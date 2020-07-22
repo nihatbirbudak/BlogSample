@@ -88,6 +88,11 @@ namespace BlogSample.WebUI
                     defaults: new { controller = "Admin", Action = "RoleAdd" });
 
                 endpoints.MapControllerRoute(
+                    name: "ArticleList",
+                    pattern: "Admin/Articles",
+                    defaults: new { controller = "Admin", Action = "ArticleList" });
+
+                endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });

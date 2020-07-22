@@ -1,4 +1,4 @@
-﻿@model UserDTO
+﻿@model UserViewModel
 
 @{
     ViewData["Title"] = "UserAdd";
@@ -10,7 +10,7 @@
             <div class="portlet box blue ">
                 <div class="portlet-title">
                     <div class="caption">
-                        <i class="fa fa-gift"></i>Kategori Bilgileri
+                        <i class="fa fa-gift"></i>Kullanıcı Ekleme
                     </div>
                     <div class="tools">
                         <a href="" class="collapse"> </a>
@@ -27,46 +27,56 @@
                         <div class="form-body">
 
                             <div class="form-group">
-                                @Html.LabelFor(z => z.FullName)
+                                @Html.LabelFor(z => z.UserDTO.FullName)
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-user"></i>
                                     </span>
-                                    <input class="form-control" placeholder="Full Name" asp-for="FullName">
-                                    <span asp-validation-for="FullName" id="Name" class="text-danger"></span>
+                                    <input class="form-control" placeholder="Full Name" asp-for="UserDTO.FullName">
+                                    <span asp-validation-for="UserDTO.FullName" id="Name" class="text-danger"></span>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="UserName" class="control-label"></label>
+                                <label asp-for="UserDTO.UserName" class="control-label"></label>
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-user"></i>
                                     </span>
-                                    <input class="form-control" placeholder="Full Name" asp-for="UserName">
-                                    <span asp-validation-for="UserName" id="Name" class="text-danger"></span>
+                                    <input class="form-control" placeholder="Full Name" asp-for="UserDTO.UserName">
+                                    <span asp-validation-for="UserDTO.UserName" id="Name" class="text-danger"></span>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="Mail" class="control-label"></label>
+                                <label asp-for="UserDTO.Mail" class="control-label"></label>
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-user"></i>
                                     </span>
-                                    <input class="form-control" placeholder="Name" asp-for="Mail">
-                                    <span asp-validation-for="Mail" id="Name" class="text-danger"></span>
+                                    <input class="form-control" placeholder="Name" asp-for="UserDTO.Mail">
+                                    <span asp-validation-for="UserDTO.Mail" id="Name" class="text-danger"></span>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label asp-for="Phone" class="control-label"></label>
+                                <label asp-for="UserDTO.Phone" class="control-label"></label>
                                 <div class="input-group">
                                     <span class="input-group-addon">
                                         <i class="fa fa-user"></i>
                                     </span>
-                                    <input class="form-control" placeholder="Name" asp-for="Phone">
-                                    <span asp-validation-for="Phone" id="Name" class="text-danger"></span>
+                                    <input class="form-control" placeholder="Name" asp-for="UserDTO.Phone">
+                                    <span asp-validation-for="UserDTO.Phone" id="Name" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="UserDTO.RoleId" class="control-label"></label>
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                        <i class="fa fa-user"></i>
+                                    </span>
+                                    <select asp-for="UserDTO.RoleId" class="form-control" asp-items="@(new SelectList(Model.RoleDTOs,"Id","Name"))"></select>
                                 </div>
                             </div>
                         </div>
