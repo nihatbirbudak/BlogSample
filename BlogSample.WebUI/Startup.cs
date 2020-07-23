@@ -3,12 +3,15 @@ using BlogSample.BLL.BlogService;
 using BlogSample.Core.Data.UnitOfWork;
 using BlogSample.DAL;
 using BlogSample.Mapping.ConfigProfile;
+using BlogSample.WebUI.CustomHandler;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Security.Claims;
 
 namespace BlogSample.WebUI
 {
@@ -25,6 +28,8 @@ namespace BlogSample.WebUI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+
             // Dependency Ýnjection
             services.AddControllersWithViews();
             services.AddSingleton<ICategoryService,CategoryService>();
@@ -44,6 +49,26 @@ namespace BlogSample.WebUI
                 context.Database.EnsureCreated();
                 context.Database.Migrate();
             }
+
+            //Login Ayarlarý
+            services.AddScoped<IAuthorizationHandler, PoliciesAuthorizationHandler>();
+            services.AddScoped<IAuthorizationHandler, RolesAuthorizationHandler>();
+
+            services.AddAuthentication("CookieAuthentication")
+                 .AddCookie("CookieAuthentication", config =>
+                 {
+                     config.Cookie.Name = "UserLoginCookie";
+                     config.LoginPath = "/Login";
+                     config.AccessDeniedPath = "/AccessDenied";
+                 });
+
+            services.AddAuthorization(config =>
+            {
+                config.AddPolicy("UserPolicy", policyBuilder =>
+                {
+                    policyBuilder.UserRequireCustomClaim(ClaimTypes.Email);
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,31 +86,57 @@ namespace BlogSample.WebUI
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
-                    name: "CategoryList",
-                    pattern: "Admin/Categories",
-                    defaults: new {controller = "Admin", Action = "CategoryList"});
-                endpoints.MapControllerRoute(
-                    name: "UserList",
-                    pattern: "Admin/Users",
-                    defaults: new { controller = "Admin", Action = "UserList" });
-                endpoints.MapControllerRoute(
-                    name: "UserAdd",
-                    pattern: "Admin/UserAdd",
-                    defaults: new { controller = "Admin", Action = "UserAdd" });
+                   name: "Register",
+                   pattern: "Register",
+                   defaults: new { controller = "Login", action = "Register" });
 
                 endpoints.MapControllerRoute(
-                    name: "RoleList",
-                    pattern: "Admin/Roles",
-                    defaults: new { controller = "Admin", Action = "RoleList" });
+                    name: "Login",
+                    pattern: "Login",
+                    defaults: new { controller = "Login", action = "UserLogin" });
+
                 endpoints.MapControllerRoute(
-                    name: "RoleAdd",
-                    pattern: "Admin/RoleAdd",
-                    defaults: new { controller = "Admin", Action = "RoleAdd" });
+                     name: "AccessDenied",
+                     pattern: "AccessDenied",
+                     defaults: new { controller = "Login", action = "AccessDenied" });
+
+                endpoints.MapControllerRoute(
+                     name: "Logout",
+                     pattern: "Logout",
+                     defaults: new { controller = "Login", action = "Logout" });
+
+
+
+                endpoints.MapControllerRoute(
+                         name: "CategoryList",
+                          pattern: "Admin/Categories",
+                           defaults: new { controller = "Admin", action = "CategoryList" });
+                endpoints.MapControllerRoute(
+                      name: "UserList",
+                      pattern: "Admin/Users",
+                      defaults: new { controller = "Admin", action = "UserList" });
+
+
+                endpoints.MapControllerRoute(
+                      name: "UserAdd",
+                      pattern: "Admin/UserAdd",
+                      defaults: new { controller = "Admin", action = "UserAdd" });
+
+                endpoints.MapControllerRoute(
+                     name: "RoleList",
+                     pattern: "Admin/Roles",
+                     defaults: new { controller = "Admin", action = "RoleList" });
+                endpoints.MapControllerRoute(
+                      name: "RoleAdd",
+                      pattern: "Admin/RoleAdd",
+                      defaults: new { controller = "Admin", action = "RoleAdd" });
 
                 endpoints.MapControllerRoute(
                     name: "ArticleList",

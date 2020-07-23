@@ -70,6 +70,7 @@ namespace BlogSample.BLL.BlogService
         public UserDTO updateUser(UserDTO user)
         {
             var selectedUser = uow.GetRepository<User>().Get(z => z.Id == user.Id);
+            user.Password = selectedUser.Password;
             selectedUser = MapperFactory.CurrentMapper.Map<User>(user);
             uow.GetRepository<User>().Update(selectedUser);
             uow.SaveChanges();

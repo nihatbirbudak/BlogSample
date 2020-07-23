@@ -1,17 +1,17 @@
 ﻿using BlogSample.BLL.Abstract;
 using BlogSample.DTO;
 using BlogSample.WebUI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BlogSample.WebUI.Controllers
 {
-    public class AdminController : Controller
+    [Authorize(Roles = "Admin,Yonetici")]
+    public class AdminController : BaseController
     {
         private readonly ICategoryService categoryService;
         private readonly IUserService userService;
@@ -177,6 +177,7 @@ namespace BlogSample.WebUI.Controllers
                     await file.CopyToAsync(stream);
                 }
             }
+            articleDTO.UserDTO = CurrentUser;
             articleService.newArticle(articleDTO);
             return RedirectToAction("ArticleList");
         }
@@ -187,8 +188,17 @@ namespace BlogSample.WebUI.Controllers
         }
         public IActionResult ArticleEdit(int id)
         {
-
-            return View();
+            ArticleViewModel model = new ArticleViewModel();
+            model.ArticleDTO = articleService.getArticle(id);
+            model.CategoryDTOs = categoryService.getAll();
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult ArticleEdit(ArticleDTO articleDTO,IFormFile file)
+        {
+            ArticleViewModel model = new ArticleViewModel();
+            model.CategoryDTOs = categoryService.getAll();
+            return View(model);
         }
 
 
